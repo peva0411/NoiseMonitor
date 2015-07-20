@@ -1,0 +1,29 @@
+﻿@{ 
+  ViewBag.Title = "Home Page";
+}
+
+<h1>SignalR Demo!</h1>
+
+<div class="row">
+  <div id="message"></div>
+</div>
+
+@section scripts{
+  <script src="~/Scripts/jquery.signalR-2.2.0.js"></script>
+  <script src="~/SignalR/hubs"></script>
+
+  <script>
+    (function () {
+      var hub = $.connection.noiseDataHub;
+
+      $.connection.hub.logging = true;
+      $.connection.hub.start();
+
+      hub.client.newMessage = function (message) {
+        $("#message").html(message);
+      };
+
+    })();
+  </script>
+
+}

@@ -6,6 +6,7 @@
 
 <div class="row">
   <div id="message"></div>
+  <div id="date"></div>
 </div>
 
 @section scripts{
@@ -19,8 +20,9 @@
       $.connection.hub.logging = true;
       $.connection.hub.start();
 
-      hub.client.newMessage = function (message) {
-        $("#message").html(message);
+      hub.client.newMessage = function (event) {
+        $("#message").html(event.Level);
+        $("#date").html(event.DateTime);
       };
 
     })();

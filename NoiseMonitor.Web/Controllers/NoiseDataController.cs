@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
+using System.Globalization;
 using System.Web.Http;
 using System.Web.Http.Results;
 using Microsoft.AspNet.SignalR;
@@ -18,7 +19,9 @@ namespace NoiseMonitor.Web.Controllers
       Debug.Write(noiseEvent.DateTime);
       var context = GlobalHost.ConnectionManager.GetHubContext<NoiseDataHub>();
 
-      context.Clients.All.newMessage(noiseEvent.Level);
+      noiseEvent.DateTime = DateTime.ParseExact(noiseEvent.DateTime, @"ddd MMM dd HH:mm:ss UTC yyyy", CultureInfo.InvariantCulture).ToLocalTime().ToString();
+
+      context.Clients.All.newMessage(noiseEvent);
 
       return Ok();
     }
@@ -27,7 +30,7 @@ namespace NoiseMonitor.Web.Controllers
 
   public class NoiseEvent
   {
-    public DateTime DateTime { get; set; }
+    public string DateTime { get; set; }
     public double Level { get; set; }
   }
 }

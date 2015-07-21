@@ -19,7 +19,11 @@ namespace NoiseMonitor.Web.Controllers
       Debug.Write(noiseEvent.DateTime);
       var context = GlobalHost.ConnectionManager.GetHubContext<NoiseDataHub>();
 
-      noiseEvent.DateTime = DateTime.ParseExact(noiseEvent.DateTime, @"ddd MMM dd HH:mm:ss UTC yyyy", CultureInfo.InvariantCulture).ToLocalTime().ToString();
+      var date = DateTime.ParseExact(noiseEvent.DateTime, @"ddd MMM dd HH:mm:ss UTC yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
+
+      var dateLocal = date.ToLocalTime();
+
+      noiseEvent.DateTime = dateLocal.ToString();
 
       context.Clients.All.newMessage(noiseEvent);
 

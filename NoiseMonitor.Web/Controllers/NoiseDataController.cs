@@ -15,6 +15,7 @@ namespace NoiseMonitor.Web.Controllers
   {
     public IHttpActionResult Post(NoiseEvent noiseEvent)
     {
+      noiseEvent.DateTime = noiseEvent.DateTime.ToUniversalTime();
 
       Debug.Write(noiseEvent.DateTime);
       var context = GlobalHost.ConnectionManager.GetHubContext<NoiseDataHub>();

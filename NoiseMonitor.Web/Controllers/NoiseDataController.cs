@@ -16,6 +16,7 @@ namespace NoiseMonitor.Web.Controllers
     public IHttpActionResult Post(NoiseEvent noiseEvent)
     {
       noiseEvent.DateTime = noiseEvent.DateTime.ToUniversalTime();
+      noiseEvent.Level = Math.Round(noiseEvent.Level, 3);
 
       Debug.Write(noiseEvent.DateTime);
       var context = GlobalHost.ConnectionManager.GetHubContext<NoiseDataHub>();
